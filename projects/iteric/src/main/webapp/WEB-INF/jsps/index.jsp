@@ -14,8 +14,7 @@
 <script type="text/javascript" src="<c:url value='/js/jquery.min.js'/>"></script>
 <script type="text/javascript"
 	src="<c:url value='/bootstrap/js/bootstrap.min.js'/>"></script>
-<style type="text/css">
-</style>
+<script type="text/javascript" src="//player.youku.com/jsapi"></script>
 </head>
 <body>
 	<div class="container">
@@ -31,6 +30,108 @@
 				<li class="pull-right"><a href="#">登录</a></li>
 				<li class="pull-right"><a href="#">注册</a></li>
 			</ol>
+		</div>
+		<!-- video -->
+		<div class="row">
+			<div id="youkuplayer" style="width: 960px; height: 540px;margin: 0px auto;"></div>
+			<script type="text/javascript">
+				function play(vid) {
+					//使用youkuapi播放以获取广告收入
+					player = new YKU.Player('youkuplayer', {
+						styleid : '0',
+						client_id : 'd61b0f8dbdc849e3',
+						vid : vid,
+						newPlayer : true,
+						autoplay : true
+					});
+				}
+				//自动播放一个
+				play("XMTg5MTU5MDE4OA==");
+			</script>
+		</div>
+		<!-- 数据 -->
+		<div class="row">
+			<div class="col-sm-6 col-md-3">
+				<div class="thumbnail">
+					<img src="<c:url value='/imgs/test.jpg'/>" alt="通用的占位符缩略图">
+					<div class="caption">
+						<h3>缩略图标签</h3>
+						<p>一些示例文本。一些示例文本。</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<div class="thumbnail">
+					<img src="<c:url value='/imgs/test.jpg'/>" alt="通用的占位符缩略图">
+					<div class="caption">
+						<h3>缩略图标签</h3>
+						<p>一些示例文本。一些示例文本。</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<div class="thumbnail">
+					<img src="<c:url value='/imgs/test.jpg'/>" alt="通用的占位符缩略图">
+					<div class="caption">
+						<h3>缩略图标签</h3>
+						<p>一些示例文本。一些示例文本。</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<div class="thumbnail">
+					<img src="<c:url value='/imgs/test.jpg'/>" alt="通用的占位符缩略图">
+					<div class="caption">
+						<h3>缩略图标签</h3>
+						<p>一些示例文本。一些示例文本。</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<div class="thumbnail">
+					<img src="<c:url value='/imgs/test.jpg'/>" alt="通用的占位符缩略图">
+					<div class="caption">
+						<h3>缩略图标签</h3>
+						<p>一些示例文本。一些示例文本。</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<div class="thumbnail">
+					<img src="<c:url value='/imgs/test.jpg'/>" alt="通用的占位符缩略图">
+					<div class="caption">
+						<h3>缩略图标签</h3>
+						<p>一些示例文本。一些示例文本。</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<div class="thumbnail">
+					<img src="<c:url value='/imgs/test.jpg'/>" alt="通用的占位符缩略图">
+					<div class="caption">
+						<h3>缩略图标签</h3>
+						<p>一些示例文本。一些示例文本。</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<div class="thumbnail">
+					<img src="<c:url value='/imgs/test.jpg'/>" alt="通用的占位符缩略图">
+					<div class="caption">
+						<h3>缩略图标签</h3>
+						<p>一些示例文本。一些示例文本。</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<div class="thumbnail">
+					<img src="<c:url value='/imgs/test.jpg'/>" alt="通用的占位符缩略图">
+					<div class="caption">
+						<h3>缩略图标签</h3>
+						<p>一些示例文本。一些示例文本。</p>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </body>
