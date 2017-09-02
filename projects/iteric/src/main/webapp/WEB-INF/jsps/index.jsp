@@ -18,9 +18,32 @@
 </head>
 <body>
 	<div class="container">
-		<div class="row">
-			<h3>最简单的页面,最实惠的干货....</h3>
-			<hr>
+		<div class="row" style="border-bottom: 1px solid lightgray;">
+			<div class="col-md-4">
+				<div class="row">
+					<div class="col-md-6">
+						<img src="<c:url value='/imgs/sync.png'/>" width="100">
+					</div>
+					<div class="col-md-6">
+						<h3>同步在线</h3>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<h3>最简单的页面,最实惠的干货....</h3>
+			</div>
+			<!-- 搜索框 -->
+			<div class="col-md-3">
+				<h3></h3>
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="搜索你想要文档或视频">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+					</span>
+				</div>
+			</div>
 		</div>
 		<div class="row">
 			<ol class="breadcrumb" style="background: #FFF;">
@@ -32,8 +55,9 @@
 			</ol>
 		</div>
 		<!-- video -->
-		<div class="row">
-			<div id="youkuplayer" style="width: 960px; height: 540px;margin: 0px auto;"></div>
+		<div class="row" style="background: #000;">
+			<div id="youkuplayer"
+				style="width: 960px; height: 540px; margin: 0px auto;"></div>
 			<script type="text/javascript">
 				function play(vid) {
 					//使用youkuapi播放以获取广告收入
@@ -42,7 +66,7 @@
 						client_id : 'd61b0f8dbdc849e3',
 						vid : vid,
 						newPlayer : true,
-						autoplay : true
+						autoplay : false
 					});
 				}
 				//自动播放一个
