@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="processDefination">
+	<select id="processDefinationQuery" resultType="java.util.HashMap">
+		<![CDATA[SELECT d.id_ as id,d.name_ as name,p.key_ as key1,
+				 p.version_ as version,d.DEPLOY_TIME_ as dt,p.id_ as pid 
+				FROM act_re_deployment d INNER JOIN act_re_procdef p ON	d.ID_=p.DEPLOYMENT_ID_
+				ORDER BY d.DEPLOY_TIME_ ASC,p.VERSION_ ASC]]>
+	</select>
+</mapper>
