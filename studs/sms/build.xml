@@ -1,0 +1,54 @@
+<project name="sms" basedir="." default="help">
+	<!--定义变量-->
+	<property name="driver" value="com.mysql.jdbc.Driver">
+	</property>
+	<property name="url" value="jdbc:mysql:///sms?characterEncoding=UTF-8">
+	</property>
+	<property name="name" value="root">
+	</property>
+	<property name="pwd" value="e234">
+	</property>
+
+	<target name="help">
+		<echo>这个是帮助信息</echo>
+	</target>
+
+	<target name="create">
+		<sql userid="${name}" url="${url}" password="${pwd}" driver="${driver}">
+			<fileset dir="${basedir}/sql/create">
+				<include name="*.sql" />
+			</fileset>
+			<classpath>
+				<fileset dir="${basedir}/WebContent/WEB-INF/lib">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</sql>
+	</target>
+
+	<target name="drop">
+		<sql userid="${name}" url="${url}" password="${pwd}" driver="${driver}" onerror="continue">
+			<fileset dir="${basedir}/sql/drop">
+				<include name="*.sql" />
+			</fileset>
+			<classpath>
+				<fileset dir="${basedir}/WebContent/WEB-INF/lib">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</sql>
+	</target>
+
+	<target name="init" description="创建初始化的数据">
+		<sql userid="${name}" url="${url}" password="${pwd}" driver="${driver}">
+			<fileset dir="${basedir}/sql/init">
+				<include name="*.sql" />
+			</fileset>
+			<classpath>
+				<fileset dir="${basedir}/WebContent/WEB-INF/lib">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</sql>
+	</target>
+</project>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<c3p0-config>
+	<!-- 默认配置，如果没有指定则使用这个配置 -->
+	<default-config>
+		<!-- 指定驱动器 -->
+		<property name="driverClass">com.mysql.jdbc.Driver</property>
+		<property name="jdbcUrl">
+			<![CDATA[jdbc:mysql:///sms?characterEncoding=UTF-8]]>
+		</property>
+		<property name="user">root</property>
+		<property name="password">1234</property>
+		<!-- 如果池中数据连接不够时一次增长多少个 -->
+		<property name="acquireIncrement">2</property>
+		<!-- 在初始化时，连接池里面有几个连接 -->
+		<property name="initialPoolSize">1</property>
+		<property name="minPoolSize">1</property>
+		<!-- 最多有几个连接 -->
+		<property name="maxPoolSize">3</property>
+		<!-- 最多可以执行多少个sql语句 -->
+		<property name="maxStatements">50</property>
+	</default-config>
+</c3p0-config> 
