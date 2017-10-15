@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>grades</display-name>
+
+	<filter>
+		<filter-name>char</filter-name>
+		<filter-class>cn.grades.core.CharFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>char</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!--认证过虑器 -->
+	<filter>
+		<filter-name>login</filter-name>
+		<filter-class>cn.grades.core.filter.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>login</filter-name>
+		<url-pattern>/manager/*</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>slogin</filter-name>
+		<filter-class>cn.grades.core.filter.SLoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>slogin</filter-name>
+		<url-pattern>/htmls/stud/*</url-pattern>
+	</filter-mapping>
+	<!-- 验证过虑器 -->
+	<filter>
+		<filter-name>auth</filter-name>
+		<filter-class>cn.grades.core.filter.AuthFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>auth</filter-name>
+		<url-pattern>/manager/*</url-pattern>
+	</filter-mapping>
+
+
+	<servlet>
+		<servlet-name>imgServlet</servlet-name>
+		<servlet-class>cn.grades.core.ImgServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>imgServlet</servlet-name>
+		<url-pattern>/img</url-pattern>
+	</servlet-mapping>
+	<!-- 验证的Servlet，可以验证验证码，可以验证用户名是否相同 -->
+	<servlet>
+		<servlet-name>ValidateServlet</servlet-name>
+		<servlet-class>cn.grades.validate.ValidateServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ValidateServlet</servlet-name>
+		<url-pattern>/validate</url-pattern>
+	</servlet-mapping>
+	<filter>
+		<filter-name>urlrewriter</filter-name>
+		<filter-class>cn.grades.core.UrlRewriterFilter</filter-class>
+		<!-- 配置对哪些文件不过虑 -->
+		<init-param>
+			<param-name>excludes</param-name>
+			<param-value>.*\.js,.*\.css,/js/.*</param-value>
+		</init-param>
+		<!-- 以下配置过虑的 -->
+		<init-param>
+			<param-name>includes</param-name>
+			<param-value>
+				/:/WEB-INF/views/slogin.jsp,
+				/index.html:/WEB-INF/views/index.jsp,
+				/(.*)\.html:/WEB-INF/views/$1.jsp
+			</param-value>
+
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>urlrewriter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+</web-app>

@@ -1,0 +1,14 @@
+<c3p0-config>
+	<default-config>
+		<property name="driverClass">com.mysql.jdbc.Driver</property>
+		<property name="jdbcUrl">
+			<![CDATA[jdbc:mysql://192.168.0.234:3306/grades?characterEncoding=UTF-8]]>
+		</property>
+		<property name="user">guest</property>
+		<property name="password">1234</property>
+		<property name="acquireIncrement">2</property><!-- 如果池中数据连接不够时一次增长多少个 -->
+		<property name="initialPoolSize">2</property>
+		<property name="minPoolSize">2</property>
+		<property name="maxPoolSize">3</property>
+	</default-config>
+</c3p0-config> 

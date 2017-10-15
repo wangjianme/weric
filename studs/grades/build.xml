@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="grades" basedir="." default="dft">
+	<!--定义变量-->
+	<property name="driver" value="com.mysql.jdbc.Driver" />
+	<property name="url" value="jdbc:mysql:///grades?characterEncoding=UTF-8" />
+	<property name="name" value="guest" />
+	<property name="pwd" value="1234">
+	</property>
+	<property name="libs" value="${basedir}/WebContent/WEB-INF/lib" />
+
+	<target name="dft">
+		<echo>请选择合适的命令</echo>
+	</target>
+	<!--创建表-->
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: init-db                      
+         - - - - - - - - - - - - - - - - - -->
+	<target name="create-db" description="创建数据表">
+		<sql userid="${name}" url="${url}" encoding="UTF-8" password="${pwd}" driver="${driver}" onerror="continue">
+			<fileset dir="${basedir}/sql/create">
+				<include name="O*.sql" />
+			</fileset>
+			<classpath>
+				<fileset dir="${libs}">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</sql>
+	</target>
+
+	<target name="dorp-db" description="删除数据表">
+		<sql userid="${name}" url="${url}" password="${pwd}" driver="${driver}" onerror="continue">
+			<fileset dir="${basedir}/sql/drop">
+				<include name="*.sql" />
+			</fileset>
+			<classpath>
+				<fileset dir="${libs}">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</sql>
+	</target>
+
+
+	<target name="init-db" description="">
+		<sql userid="${name}" url="${url}" password="${pwd}" driver="${driver}">
+			<fileset dir="${basedir}/sql/init">
+				<include name="*.sql" />
+			</fileset>
+			<classpath>
+				<fileset dir="${libs}">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</sql>
+	</target>
+</project>
