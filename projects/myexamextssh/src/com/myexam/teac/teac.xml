@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="teac" extends="struts-default">
+		<interceptors>
+			<interceptor name="teacLogin" class="com.myexam.teac.pub.TeacInterceptor">
+				<!-- 
+				<param name="excludeMethods">execute,login,loginOut</param>
+				<param name="includeMethods">loginSuccess</param>
+				 -->
+			</interceptor>
+			<interceptor-stack name="validateLogin">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<interceptor-ref name="teacLogin"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="validateLogin"></default-interceptor-ref>
+	 	<!-- 处理公共的json串 -->
+		<global-results>	
+			<result name="jsonPage">/jsps/teac/pub/json.jsp</result>
+			<result name="teacLogin" type="redirectAction">
+				<param name="actionName">admin</param>
+			</result>
+		</global-results>
+		<!-- 管理员登录 -->
+		<action name="admin" class="adminLogin">
+			<result name="success">/jsps/teac/login/login.jsp</result>
+			<result name="loginSuccess">/jsps/teac/DeskTop.jsp</result>
+		</action>
+		<!-- 显示菜单 -->
+		<action name="menu" class="teacMenuAction">
+		</action>
+		<!-- 教师注册 -->
+		<action name="teacReg" class="teacRegAction">
+			<result name="init">/jsps/teac/reg/reg.jsp</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		<!-- 角色管理 -->
+		<action name="roleAction" class="roleAction">
+			<result name="init">/jsps/teac/security/role/role.jsp</result>
+		</action>
+		<!-- 部门管理 -->
+		<action name="dept" class="deptAction">
+			<result>/jsps/teac/init/dept/dept.jsp</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		<!-- 给角色分配功能 -->
+		<action name="func" class="funcAction">
+		</action>
+		<!-- 用户管理 -->
+		<action name="teac" class="teacAction">
+			<result>/jsps/teac/security/users/teac.jsp</result>
+		</action>
+		<!-- 学制设置 --> 
+		<action name="edusys" class="edusysAction">
+			<result>/jsps/teac/init/edusys/edusys.jsp</result>
+		</action>
+		<!-- 专业 -->
+		<action name="major" class="majorAction">
+			<result>/jsps/teac/init/major/major.jsp</result>
+		</action>
+		<!-- 课程管理 -->
+		<action name="cour" class="courAction">
+			<result>/jsps/teac/init/cour/cour.jsp</result>
+		</action>
+		<!-- 班级管理 -->
+		<action name="class" class="classAction">
+			<result>/jsps/teac/manager/cls/cls.jsp</result>
+		</action>
+		<!-- 学生管理 -->
+		<action name="studmanager" class="studManagerAction">
+			<result>/jsps/teac/manager/stud/stud.jsp</result>
+		</action>
+		<!-- 题型 -->
+		<action name="cate" class="cateAction">
+			<result>/jsps/teac/init/cate/cate.jsp</result>
+		</action>
+		<!-- 修改密码 -->
+		<action name="teacpwd" class="teacPasswordAction">
+			<result>/jsps/teac/security/pwd/pwd.jsp</result>
+		</action>
+		<!-- 试题管理 -->
+		<action name="ques" class="quesAction">
+			<result>/jsps/teac/exam/ques/ques.jsp</result>
+			<result name="add">/jsps/teac/exam/ques/add/add.jsp</result>
+			<result name="view">/jsps/teac/exam/ques/view/view.jsp</result>
+		</action>
+		<!-- 试题管理中的图片上传 -->
+		<action name="quesupimg" class="com.myexam.teac.exam.ques.action.UploadQuesPicAction">
+		</action>
+		<!-- 考试设置 -->
+		<action name="examset" class="examSetAction">
+			<result>/jsps/teac/exam/exam/exam.jsp</result>
+			<result name="add">/jsps/teac/exam/exam/add/add.jsp</result>
+		</action>
+		<!-- 试卷保存，因为功能太多，所以，将试卷保存放到另处的类中处理 -->
+		<action name="examadd" class="examAddAction">
+		</action>
+		<!-- 试卷预览 -->
+		<action name="examview" class="examViewAction">
+			<result>/jsps/teac/exam/exam/examview/examview.jsp</result>
+			<result name="view">/jsps/teac/exam/exam/examview/examnote.jsp</result>
+			<result name="examques">/jsps/teac/exam/exam/examview/examques.jsp</result>
+		</action>
+		<!-- 考试安排 -->
+		<action name="examarrange" class="examArrangeAction">
+			<result>/jsps/teac/examarrange/arrange.jsp</result>
+		</action>
+		<!-- 考试监控 -->
+		<action name="exammonitor" class="examMonitorAction">
+			<result>/jsps/teac/exammonitor/monitor.jsp</result>
+		</action>
+		<!-- 在线阅卷功能 -->
+		<action name="onlinerate" class="onlineRateAction">
+			<result>/jsps/teac/onlinerate/onlinerate.jsp</result>
+			<result name="answs">/jsps/teac/onlinerate/rateques.jsp</result>
+		</action>
+		<!-- 补考设置 -->
+		<action name="lostexam" class="lostExamAction">
+			<result>/jsps/teac/lostexam/lost.jsp</result>
+		</action>
+		<!-- 查询学生成绩 -->
+		<action name="scoresquery" class="scoresQueryAction">
+			<result name="success">/jsps/teac/scoresquery/scoresquery.jsp</result>
+		</action>
+		<!-- 忘记密码 -->
+		<action name="teaclostpwd" class="teacLostPwdAction">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="stud" extends="struts-default" namespace="/">
+		<interceptors>
+			<!-- 验证学生是否已经登录 -->
+			<interceptor name="studLogin" class="com.myexam.stud.pub.StudInterceptor"></interceptor>
+			<interceptor-stack name="validateLogin">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<interceptor-ref name="studLogin"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="validateLogin"></default-interceptor-ref>
+		<global-results>	
+			<result name="jsonPage">/jsps/teac/pub/json.jsp</result>
+			<result name="studLogin" type="redirectAction">login</result>
+		</global-results>
+		<!-- 学生登录功能 -->
+		<action name="login" class="studLoginAction">
+			<result name="success">/jsps/stud/login/login.jsp</result>
+			<result name="desktop">/jsps/stud/desktop/desktop.jsp</result>
+		</action>
+		<!-- 学生注册功能 -->
+		<action name="studreg" class="studRegAction">
+			<result name="success">/jsps/stud/reg/reg.jsp</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		<!-- 学生考试功能，包括正常考试和补考 -->
+		<action name="studexam" class="studExamAction">
+			<result name="success">/jsps/stud/studexam/examlist.jsp</result>
+			<result name="examingPage">/jsps/stud/studexam/examingPage.jsp</result>
+			<result name="oneques">/jsps/stud/studexam/examques.jsp</result>
+			<result name="examscore">/jsps/stud/studexam/examscroe.jsp</result>
+		</action>
+		<!-- 学生成绩查询 -->
+		<action name="studscore" class="studScoreAction">
+			<result name="success">/jsps/stud/studscore/score.jsp</result>
+		</action>
+		<!-- 学生修改密码 -->
+		<action name="studrepwd" class="studRepwdAction">
+			<result name="success">/jsps/stud/repwd/pwd.jsp</result>
+		</action>
+		<!-- 学生找回密码 -->
+		<action name="studlostpwd" class="studLostPwdAction">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		<!-- 学生明细信息 -->
+		<action name="studdetail" class="studDetailAction">
+			<result name="success">/jsps/stud/detail/detail.jsp</result>
+		</action>
+	</package>
+</struts>

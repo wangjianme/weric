@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+				http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+				http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+	<!-- 学生登录 -->
+	<bean id="studLoginAction" class="com.myexam.stud.login.action.LoginAction" scope="prototype">
+		<property name="service">
+			<ref local="studLoginService"/>
+		</property>
+	</bean>
+	<bean id="studLoginService" class="com.myexam.stud.login.service.StudLoginServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.stud.login.dao.StudLoginDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 学生注册 -->
+	<bean id="studRegAction" class="com.myexam.stud.reg.action.StudRegAction" scope="prototype">
+		<property name="service">
+			<ref local="studRegService"/>
+		</property>
+	</bean>
+	<bean id="studRegService" class="com.myexam.stud.reg.service.StudRegService">
+		<property name="dao">
+			<bean class="com.myexam.stud.reg.dao.StudRegDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 学生参加考试 -->
+	<bean id="studExamAction" class="com.myexam.stud.studexam.action.StudExamAction" scope="prototype">
+		<property name="service">
+			<ref local="studExamService"/>
+		</property>
+	</bean>
+	<bean id="studExamService" class="com.myexam.stud.studexam.service.StudExamServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.stud.studexam.dao.StudExamDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 学生查询自己的成绩 -->
+	<bean id="studScoreAction" class="com.myexam.stud.studscore.action.StudScoreAction" scope="prototype">
+		<property name="service">
+			<ref local="studScoreService"/>
+		</property>
+	</bean>
+	<bean id="studScoreService" class="com.myexam.stud.studscore.service.StudScoreServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.stud.studscore.dao.StudScoreDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 修改密码 -->
+	<bean id="studRepwdAction" class="com.myexam.stud.repwd.action.RepwdAction" scope="prototype">
+		<property name="service">
+			<ref local="studRepwdService"/>
+		</property>
+	</bean>
+	<bean id="studRepwdService" class="com.myexam.stud.repwd.service.RepwdServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.stud.repwd.dao.RepwdDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 学生忘记密码的找回 -->
+	<bean id="studLostPwdAction" class="com.myexam.stud.lostpwd.action.StudLostPwdAction" scope="prototype">
+		<property name="service">
+			<ref local="studLostPwdService"/>
+		</property>
+	</bean>
+	<bean id="studLostPwdService" class="com.myexam.stud.lostpwd.service.StudLostPwdServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.stud.lostpwd.dao.StudLostPwdDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 学生明细信息 -->
+	<bean id="studDetailAction" class="com.myexam.stud.detail.action.StudDetailAction" scope="prototype">
+		<property name="service">
+			<ref local="studDetailService"/>
+		</property>
+	</bean>
+	<bean id="studDetailService" class="com.myexam.stud.detail.service.StudDetailServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.stud.detail.dao.StudDetailDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.myexam.domain.Openexam" table="openexam">
+		<id name="oeId" type="java.lang.String">
+			<column name="oe_id" length="32" />
+			<generator class="uuid" />
+		</id>
+		<property name="oeExam" type="java.lang.String">
+			<column name="oe_exam" length="32"></column>
+		</property>
+		<property name="oeStud" type="java.lang.String">
+			<column name="oe_stud" length="32"></column>
+		</property>
+		<property name="oeState" type="java.lang.String">
+			<column name="oe_state" length="1" />
+		</property>
+		<property name="oeTeac" type="java.lang.String">
+			<column name="oe_teac" length="50" />
+		</property>
+		<property name="oeRate" type="java.lang.String">
+			<column name="oe_rate" length="50" />
+		</property>
+		<property name="oeTime" type="java.lang.String">
+			<column name="oe_time" length="19" />
+		</property>
+		<property name="oeType" type="java.lang.Integer">
+			<column name="oe_type"></column>
+		</property>
+		<property name="oeInfo" type="java.lang.String">
+			<column name="oe_info" length="32"></column>
+		</property>
+	</class>
+</hibernate-mapping>

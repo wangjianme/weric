@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+				http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+				http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>
+					/WEB-INF/conf/spring/base/jdbc.properties
+				</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="url" value="${url}"></property>
+		<property name="driverClassName" value="${driver}"></property>
+		<property name="username" value="${uid}"></property>
+		<property name="password" value="${pwd}"></property>
+	</bean>
+	<!-- 备用数据连接
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
+			p:driverClassName="${jdbc.driverClassName}" p:url="${jdbc.url}" p:username="${jdbc.username}"
+			p:password="${jdbc.password}"/>
+	 -->
+	 <!-- 
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	 -->
+	
+	<!-- 配置DataSource事务管理的设备 -->
+	<!-- 
+	<tx:advice id="dataSourceTxAdvice" transaction-manager="dataSourceTxManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED"/>
+		</tx:attributes>
+	</tx:advice>
+	 -->
+	<!-- 配置Hibernate的 -->
+	<tx:advice id="sessionTxAdvice" transaction-manager="sessionTxManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED"/>
+		</tx:attributes>
+	</tx:advice>
+	<!-- 配置一个切入点,对指定的类进行事务管理-->
+	<aop:config>
+		<aop:pointcut id="onePointCut" expression="execution(* com..service.*Service.*(..))"/>
+		<aop:advisor advice-ref="sessionTxAdvice" pointcut-ref="onePointCut"/>
+	</aop:config>	
+	
+	
+	<!--配置Hibernate -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.generate_statistics">${hibernate.generate_statistics}</prop>
+			</props>
+		</property>
+		<property name="eventListeners">
+			<map>
+				<entry key="merge">
+					<bean class="org.springframework.orm.hibernate3.support.IdTransferringMergeEventListener"/>
+				</entry>
+			</map>
+		</property>
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>classpath:com/myexam/domain</value>
+			</list>
+		</property>
+	</bean>
+	 <!-- 管理SessionFactory -->
+	<bean id="sessionTxManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<!-- 直接管理数据源 -->
+	<!-- 
+	 <bean id="dataSourceTxManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	 	<property name="dataSource" ref="dataSource"></property>
+	 </bean>
+	 -->
+	
+	<!-- 测试基本数据库的连接
+	<bean class="com.test.TestDB">
+		<constructor-arg ref="dataSource"></constructor-arg>
+		<constructor-arg ref="testService"></constructor-arg>
+	</bean>
+	 -->
+	<!-- 测试Hibernate 
+	<bean id="testService" class="com.test.service.TestServiceImpl">
+		<property name="dao">
+			<bean class="com.test.dao.TestDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	-->
+</beans>

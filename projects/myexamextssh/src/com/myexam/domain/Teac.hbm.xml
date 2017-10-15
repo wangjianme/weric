@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.myexam.domain">
+    <class name="Teac" table="teac">
+        <id name="teacId" type="java.lang.String">
+            <column name="teac_id" length="32" />
+            <generator class="uuid" />
+        </id>
+        <property name="teacName" type="java.lang.String">
+            <column name="teac_name" length="20" not-null="true" />
+        </property>
+        <property name="teacPwd" type="java.lang.String">
+            <column name="teac_pwd" length="32" not-null="true" />
+        </property>
+        <property name="teacSex" type="java.lang.String">
+            <column name="teac_sex" length="1" />
+        </property>
+        <property name="teacTime" type="java.lang.String">
+            <column name="teac_time" length="19" />
+        </property>
+        <property name="teacState" type="java.lang.String">
+            <column name="teac_state" length="1" />
+        </property>
+        <property name="teacDept" type="java.lang.String">
+            <column name="teac_dept" length="32" />
+        </property>
+        <property name="teacEmail" type="java.lang.String">
+            <column name="teac_email" length="50" />
+        </property>
+        <property name="teacTel" type="java.lang.String">
+            <column name="teac_tel" length="50" />
+        </property>
+        <property name="teacQues" type="java.lang.String">
+        	<column name="teac_ques" length="100"></column>
+        </property>
+        <property name="teacAnswer" type="java.lang.String">
+        	<column name="teac_answer" length="32"></column>
+        </property>
+    </class>
+</hibernate-mapping>

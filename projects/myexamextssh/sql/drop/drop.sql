@@ -1,0 +1,24 @@
+drop table answ;
+drop table cate;
+drop table courmajor;
+drop table cour;
+drop table func;
+drop table log;
+drop table info;
+drop table openexam;
+drop table examques;
+drop table examcate;
+drop table exam;
+drop table lostexam;
+drop table menu;
+drop table ques;
+
+drop table stud;
+drop table teacrole;
+drop table test;
+drop table cls;
+drop table major;
+drop table dept;
+drop table role;
+drop table teac;
+drop table edusys;

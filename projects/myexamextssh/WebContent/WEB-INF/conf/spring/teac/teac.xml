@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+				http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+				http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+	<!-- 管理教师登录 -->
+	<bean id="adminLogin" class="com.myexam.teac.login.action.LoginAction" scope="prototype">
+		<property name="service" ref="teac.loginService"></property>
+	</bean>
+	<bean id="teac.loginService" class="com.myexam.teac.login.service.LoginServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.teac.login.dao.LoginDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 教师注册 -->
+	<bean id="teacRegAction" class="com.myexam.teac.reg.action.TeacRegAction" scope="prototype">
+		<property name="service">
+			<ref local="teacRegService"/>
+		</property>
+	</bean>
+	<bean id="teacRegService" class="com.myexam.teac.reg.service.TeacRegService">
+		<property name="dao">
+			<bean class="com.myexam.teac.reg.dao.TeacRegDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 菜单 -->
+	<bean id="teacMenuAction" class="com.myexam.teac.menu.action.TeacMenuAction" scope="prototype">
+			<property name="service" ref="teac.MenuService"></property>	
+	</bean>
+	<bean id="teac.MenuService" class="com.myexam.teac.menu.service.TeacMenuServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.teac.menu.dao.TeacMenuDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- Role角色管理 -->
+	<bean id="roleAction" class="com.myexam.teac.security.role.action.RoleAction" scope="prototype">
+		<property name="service" ref="roleService"></property>
+	</bean>
+	<bean id="roleService" class="com.myexam.teac.security.role.service.RoleServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.teac.security.role.dao.RoleDaoJdbc">
+				<property name="dataSource" ref="dataSource"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 组织架构,部门管理 -->
+	<bean id="deptAction" class="com.myexam.teac.init.dept.action.DeptAction" scope="prototype">
+		<property name="service">
+			<ref local="deptService"/>
+		</property>
+	</bean>
+	<bean id="deptService" class="com.myexam.teac.init.dept.service.DeptServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.teac.init.dept.dao.DeptDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 学制-->
+	<bean id="edusysAction" class="com.myexam.teac.init.edusys.action.EdusysAction" scope="prototype">
+		<property name="service">
+			<ref local="edusysService"/>
+		</property>
+	</bean>
+	<bean id="edusysService" class="com.myexam.teac.init.edusys.service.EdusysServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.teac.init.edusys.dao.EdusysDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 角色分配功能 -->
+	<bean id="funcAction" class="com.myexam.teac.security.func.action.FuncAction" scope="prototype">
+		<property name="service">
+			<ref local="funcService"/>
+		</property>
+	</bean>
+	<bean id="funcService" class="com.myexam.teac.security.func.service.FuncServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.teac.security.func.dao.FuncDaoJdbc">
+				<property name="dataSource" ref="dataSource"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 用户管理 -->
+	<bean id="teacAction" class="com.myexam.teac.security.users.action.UsersAction">
+		<property name="service">
+			<ref local="teacService"/>
+		</property>
+	</bean>
+	<bean id="teacService" class="com.myexam.teac.security.users.service.UsersServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.teac.security.users.dao.UsersDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 修改密码功能 -->
+	<bean id="teacPasswordAction" class="com.myexam.teac.security.password.action.PasswordAction" scope="prototype">
+		<property name="service">
+			<ref local="teacService"/>
+		</property>
+	</bean>
+	<!-- 专业 -->
+	<bean id="majorAction" class="com.myexam.teac.init.major.action.MajorAction" scope="prototype">
+		<property name="service">
+			<ref local="majorService"/>
+		</property>
+	</bean>
+	<bean id="majorService" class="com.myexam.teac.init.major.service.MajorServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.teac.init.major.dao.MajorDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 课程管理 -->
+	<bean id="courAction" class="com.myexam.teac.init.cour.action.CourAction" scope="prototype">
+		<property name="service">
+			<ref local="courService"/>
+		</property>
+	</bean>
+	<bean id="courService" class="com.myexam.teac.init.cour.service.CourServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.teac.init.cour.dao.CourDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 班级管理 -->
+	<bean id="classAction" class="com.myexam.teac.manager.cls.action.ClsAction" scope="prototype">
+		<property name="service">
+			<ref local="classService"/>
+		</property>
+	</bean>
+	<bean id="classService" class="com.myexam.teac.manager.cls.service.ClsServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.teac.manager.cls.dao.ClsDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 学生管理 -->
+	<bean id="studManagerAction" class="com.myexam.teac.manager.stud.action.StudManagerAction" scope="prototype">
+		<property name="service">
+			<ref local="studManagerService"/>
+		</property>
+	</bean>
+	<bean id="studManagerService" class="com.myexam.teac.manager.stud.service.StudManagerServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.teac.manager.stud.dao.StudManagerDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 查看题型 -->
+	<bean id="cateAction" class="com.myexam.teac.init.cate.action.CateAction" scope="prototype">
+		<property name="service">
+			<ref local="cateService"/>
+		</property>
+	</bean>
+	<bean id="cateService" class="com.myexam.teac.init.cate.service.CateServiceServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.teac.init.cate.dao.CateDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 试题管理 -->
+	<bean id="quesAction" class="com.myexam.teac.exam.ques.action.QuesAction" scope="prototype">
+		<property name="service">
+			<ref local="quesService"/>
+		</property>
+	</bean>
+	<bean id="quesService" class="com.myexam.teac.exam.ques.service.QuesServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.teac.exam.ques.dao.QuesDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 试卷设置 -->
+	<bean id="examSetAction" class="com.myexam.teac.exam.exam.action.ExamSetAction" scope="prototype">
+		<property name="service">
+			<ref local="examSetService"/>
+		</property>
+	</bean>
+	<bean id="examSetService" class="com.myexam.teac.exam.exam.service.ExamServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.teac.exam.exam.dao.ExamDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 试卷保存 -->
+	<bean id="examAddAction" class="com.myexam.teac.examadd.action.ExamAddAction" scope="prototype">
+		<property name="service">
+			<ref local="examAddService"/>
+		</property>
+	</bean>
+	<bean id="examAddService" class="com.myexam.teac.examadd.service.ExamAddServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.teac.examadd.dao.ExamAddDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 试卷预览功能 -->
+	<bean id="examViewAction" class="com.myexam.teac.examview.action.ExamviewAction" scope="prototype">
+		<property name="service">
+			<ref local="examViewService"/>
+		</property>
+	</bean>
+	<bean id="examViewService" class="com.myexam.teac.examview.service.ExamviewServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.teac.examview.dao.ExamviewDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 考试安排 -->
+	<bean id="examArrangeAction" class="com.myexam.teac.examarrange.action.ExamArrangeAction" scope="prototype">
+		<property name="service">
+			<ref local="examArrangeService"/>
+		</property>
+	</bean>
+	<bean id="examArrangeService" class="com.myexam.teac.examarrange.service.ExamArrangeServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.teac.examarrange.dao.ExamArrangeDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 考试监控 -->
+	<bean id="examMonitorAction" class="com.myexam.teac.exammonitor.action.ExamMonitorAction" scope="prototype">
+		<property name="service">
+			<ref local="examMonitorService"/>
+		</property>
+		<property name="studExamService">
+			<ref bean="studExamService"/>
+		</property>
+	</bean>
+	<bean id="examMonitorService" class="com.myexam.teac.exammonitor.service.ExamMonitorServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.teac.exammonitor.dao.ExamMonitorDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 在线阅卷 -->
+	<bean id="onlineRateAction" class="com.myexam.teac.onlinerate.action.OnlineRateAction" scope="prototype">
+		<property name="service">
+			<ref local="onlineRateService"/>
+		</property>
+	</bean>
+	<bean id="onlineRateService" class="com.myexam.teac.onlinerate.service.OnlineRateServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.teac.onlinerate.dao.OnlineRateDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 补考设置 -->
+	<bean id="lostExamAction" class="com.myexam.teac.lostexam.action.LostExamAction" scope="prototype">
+		<property name="service">
+			<ref local="lostExamService"/>
+		</property>
+	</bean>
+	<bean id="lostExamService" class="com.myexam.teac.lostexam.service.LostExamServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.teac.lostexam.dao.LostExamDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 查询学生成绩 -->
+	<bean id="scoresQueryAction" class="com.myexam.teac.scores.action.ScoresQueryAction" scope="prototype">
+		<property name="service">
+			<ref local="scoresQueryService"/>
+		</property>
+	</bean>
+	<bean id="scoresQueryService" class="com.myexam.teac.scores.service.ScoresQueryServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.teac.scores.dao.ScoresQueryDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 忘记密码 -->
+	<bean id="teacLostPwdAction" class="com.myexam.teac.lostpwd.action.LostPwdAction" scope="prototype">
+		<property name="service">
+			<ref local="teacLostPwdService"/>
+		</property>
+	</bean>
+	<bean id="teacLostPwdService" class="com.myexam.teac.lostpwd.service.LostPwdServiceImpl">
+		<property name="dao">
+			<bean class="com.myexam.teac.lostpwd.dao.LostPwdDaoJdbc">
+				<property name="sessionFactory" ref="sessionFactory"></property>
+			</bean>
+		</property>
+	</bean>
+</beans>

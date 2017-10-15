@@ -1,0 +1,96 @@
+Ext.onReady(function(){
+	//课程帮助
+	var courStore = new Ext.data.JsonStore({
+		url:path+'ques!queryCour.action',
+		root:'cours',
+		idProperty:'courId',
+		totalProperty:'count',
+		fields:['courId','courName','courHour'],
+		listeners:{
+			beforeload:function(store,opts){
+				var v = Ext.getCmp("courName").getValue();
+				Ext.apply(opts.params,{
+					courName:v
+				})
+			}
+		}
+	});
+	var courGrid = new Ext.grid.GridPanel({
+		width:300,
+		height:300,
+		region:'center',
+		store:courStore,
+		tbar:[
+			{
+				xtype:'label',
+				text:'课程名称：'
+			},
+			{
+				xtype:'textfield',
+				id:'courName',
+				width:60
+			},
+			'->',
+			{
+				xtype:'button',
+				text:'查询',
+				handler:function(){
+					courStore.reload({params:{start:0,limit:10}});
+				}
+			}
+		],
+		cm:new Ext.grid.ColumnModel({
+			defaults:{sortable:true},
+			columns:[
+				{id:'courId',header:'id',dataIndex:'courId',hidden:true,hideable:false},
+				{id:'courName',header:'课程名称',dataIndex:'courName'},
+				{id:'courHour',header:'课时',dataIndex:'courHour'}
+			]
+		}),
+		autoExpandColumn:'courName',
+		sm:new Ext.grid.RowSelectionModel({singleSelect:true}),
+		bbar:new Ext.PagingToolbar({
+			store:courStore,
+			pageSize:10,
+			displayInfo:true,
+			displayMsg:'{0}-{1}共{2}',
+			emptyMsg:'没有数据'
+		}),
+		listeners:{
+			afterrender:function(){
+				courStore.load({params:{start:0,limit:10}});
+			}
+		}
+	});
+	courWin = new Ext.Window({
+		modal:true,
+		width:300,
+		height:300,
+		//autoHeight:true,
+		title:'课程',
+		layout:'border',
+		colseAction:'hide',
+		items:[courGrid],
+		buttons:[
+			{
+				text:'确定',
+				handler:function(){
+					var rc = courGrid.getSelectionModel().getSelected();
+					if(!rc){
+						Ext.Msg.alert('提示','请选择一行数据!');
+					}else{
+						addForm.getForm().findField('quesCour').setValue(rc.get('courId'));
+						addForm.getForm().findField('courName').setValue(rc.get('courName'));
+						courWin.hide();
+					}
+				}
+			},
+			{
+				text:'关闭',
+				handler:function(){
+					courWin.hide();
+				}
+			}
+		]
+	});
+});

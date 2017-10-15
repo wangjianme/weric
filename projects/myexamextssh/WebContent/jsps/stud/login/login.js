@@ -1,0 +1,305 @@
+Ext.onReady(function(){
+	if(parent.toLogin){
+		parent.login();
+	}else{
+	
+		var panel = new Ext.form.FormPanel({
+			title:'迈易学生在线考试系统',
+			width:400,
+			//height:300,
+			frame:true,
+			border:false,
+			region:'center',
+			items:[
+				{
+					xtype:'panel',
+					layout:'column',
+					border:false,
+					width:400,
+					items:[
+						{
+							xtype:'panel',
+							width:60,
+							height:60,
+							html:'<img width=60 height=60 src='+path+'css/images/login.png></img>'
+						},
+						{
+							xtype:'panel',
+							border:false,
+							columnWidth:.9,
+							layout:'form',
+							labelSeparator:'：',
+							defaults:{width:150},
+							labelWidth:100,
+							labelAlign:'right',
+							items:[
+								{
+									xtype:'textfield',
+									fieldLabel:'身份证号码<font color="red">*</font>',
+									name:'studSid',
+									allowBlank:false
+								},
+								{
+									xtype:'textfield',
+									fieldLabel:'密码<font color="red">*</font>',
+									allowBlank:false,
+									name:'studPwd',
+									inputType:'password'
+								}
+							]
+						}
+					]
+				}
+			]
+		});
+		
+		var win = new Ext.Window({
+			width:400,
+			height:150,
+			//autoHeight:true,
+			closable:false,
+			resizable:false,
+			border:false,
+			//frame:false,
+			layout:'border',
+			items:[panel],
+			buttons:[
+				{
+					xtype:'button',
+					text:'登录',
+					handler:function(){
+						var boo = panel.getForm().isValid();
+						if(boo){
+							panel.getForm().doAction('submit',{
+								url:path+'login!login.action',
+								method:'post',
+								waitMsg:'正在登录，请稍候...',
+								waitTitle:'登录中...',
+								success:function(bf,opts){
+									if(opts.result.success==true){
+										window.location.href=path+'login!loginSuccess.action';
+									}else{
+										Ext.Msg.alert('提示','用户名或密码错误!');
+									}
+								},
+								failure:function(bf,opts){
+									Ext.Msg.alert('登录提示','用户名或密码错误!');
+								}
+							});
+						}
+					}
+				},
+				{
+					xtype:'button',
+					text:'注册',
+					handler:function(){
+						window.location.href=path+"studreg.action";
+					}
+				},
+				{
+					xtype:'button',
+					text:'忘记密码',
+					handler:function(){
+						var studSid = panel.getForm().findField('studSid').getValue();
+						if(studSid.trim()==""){
+							Ext.Msg.alert('提示','请输入登录账号!');
+						}else{
+							Ext.Ajax.request({
+								url:path+'studlostpwd!queryQues.action',
+								method:'post',
+								params:{studSid:studSid},
+								success:function(resp,opts){
+									var result = Ext.util.JSON.decode(resp.responseText);
+									if(result.success==true){
+										if(result.exsits==true){
+											var studId = result.studId;
+											var studQues = result.studQues;
+											var studName = result.studName;
+											win1.show(null,function(){
+												form1.getForm().findField('studId').setValue(studId);
+												form1.getForm().findField('studName').setValue(studName);
+												form1.getForm().findField('studQues').setValue(studQues);
+											});
+										}else{
+											Ext.Msg.alert('提示','此用户不存在！');
+										}
+									}else{
+										Ext.Msg.alert('提示','操作不成功!');
+									}
+								},
+								failure:function(resp,opts){
+									alert("操作不成功!")
+								}
+							});
+						}
+					}
+				}
+			]
+		});
+		win.show();
+		
+		//忘记密码以后的重置
+		var form1 = new Ext.form.FormPanel({
+			frame:true,
+			labelSeparator:'：',
+			defaults:{width:170},
+			labelAlign:'right',
+			items:[
+				{
+					xtype:'hidden',
+					name:'studId'
+				},
+				{
+					xtype:'textfield',
+					name:'studName',
+					cls:'txt',
+					fieldLabel:'姓名',
+					readOnly:true
+				},
+				{
+					xtype:'textfield',
+					name:'studQues',
+					cls:'txt',
+					readOnly:true,
+					fieldLabel:'提示问题'
+				},
+				{
+					xtype:'textfield',
+					name:'studAnswer',
+					allowBlank:false,
+					fieldLabel:'问题答案'
+				}
+			]
+			
+		}); 
+		var win1 = new Ext.Window({
+			title:'第一步：回答问题',
+			modal:true,
+			width:350,
+			height:300,
+			autoHeight:true,
+			closeAction:'hide',
+			items:[form1],
+			buttons:[
+				{
+					text:'下一步',
+					handler:function(){
+						var boo = form1.getForm().isValid();
+						if(boo){
+							form1.getForm().doAction('submit',{
+								url:path+'studlostpwd!toUpdate.action',
+								method:'post',
+								success:function(frm,opts){
+									if(opts.result.success==true){
+										if(opts.result.equals==true){
+											var studId = form1.getForm().findField('studId').getValue();
+											win1.hide(null,function(){
+												form1.getForm().reset();
+											});
+											win2.show(null,function(){
+												form2.getForm().reset();
+												form2.getForm().findField('studId').setValue(studId);
+											});
+										}else{
+											Ext.Msg.alert('提示','问题回答不正确！');
+										}
+									}else{
+										Ext.Msg.alert('提示','操作不成功！');
+									}
+								},
+								failure:function(frm,opts){
+									alert('操作失败!');
+								}
+							});
+						}
+					}
+				},
+				{
+					text:'关闭',
+					handler:function(){
+						win1.hide();
+					}
+				}
+			]
+		});
+		
+		//更新密码使用
+		var form2 = new Ext.form.FormPanel({
+			frame:true,
+			labelAlign:'right',
+			labelSeparator:'：',
+			defaults:{width:150},
+			items:[
+				{
+					xtype:'hidden',
+					name:'studId',
+					fieldLabel:'ID'
+				},
+				{
+					xtype:'textfield',
+					name:'studPwd',
+					fieldLabel:'密码',
+					allowBlank:false,
+					inputType:'password'
+				},
+				{
+					xtype:'textfield',
+					name:'repwd',
+					fieldLabel:'再次输入密码',
+					allowBlank:false,
+					inputType:'password'
+				}
+			]
+			
+		});
+		var win2 = new Ext.Window({
+			title:'第二步：修改密码',
+			modal:true,
+			width:350,
+			height:300,
+			autoHeight:true,
+			closeAction:'hide',
+			items:[form2],
+			buttons:[
+				{
+					text:'重设密码',
+					handler:function(){
+						var boo = form2.getForm().isValid();
+						if(boo){
+							var p1 = form2.getForm().findField('studPwd').getValue();
+							var p2 = form2.getForm().findField('repwd').getValue();
+							if(p1.trim()!=p2.trim()){
+								Ext.Msg.alert('提示','两次密码输入不一致!');
+							}else{
+								form2.getForm().doAction('submit',{
+									url:path+'studlostpwd!update.action',
+									method:'post',
+									success:function(frm,opts){
+										if(opts.result.success==true){
+											Ext.Msg.alert('提示','你的密码已经重新设置成功！',function(){
+												win2.hide();
+											});
+										}else{
+											Ext.Msg.alert('提示','操作不成功！');
+										}
+									},
+									failure:function(frm,opts){
+										alert('操作失败！');
+									}
+								});
+							}
+						}
+					}
+				},
+				{
+					text:'关闭',
+					handler:function(){
+						win2.hide();
+					}
+				}
+			]
+		});
+		
+		
+	}
+});

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="myexamextssh"
+  id="myeclipse.1340582759234"
+  context-root="/myexamextssh"
+  j2ee-spec="5.0"
+  archive="myexamextssh.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

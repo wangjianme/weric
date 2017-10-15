@@ -1,0 +1,18 @@
+.queryBtn {
+	background-image: url(images/query.png) !important;
+}
+
+.helpBtn {
+	background-image: url(images/help.png) !important;
+}
+
+.input_txt {
+	background: url(images/input_txt2.png) no-repeat 0 0 !important;
+}
+
+.icon-uploadpic {
+	background: url(images/image_add.png) no-repeat 0 0 !important;
+}
+.headerDiv{
+	background: url(images/hd-bg.gif) !important;
+}
