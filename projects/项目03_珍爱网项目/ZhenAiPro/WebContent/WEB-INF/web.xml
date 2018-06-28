@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<display-name></display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	<servlet>
+		<servlet-name>echarts</servlet-name>
+		<servlet-class>com.echarts.controller.AgeServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>SchoolServlet</servlet-name>
+		<servlet-class>com.echarts.controller.SchoolServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>GenderServlet</servlet-name>
+		<servlet-class>com.echarts.controller.GenderServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>CityServlet</servlet-name>
+		<servlet-class>com.echarts.controller.CityServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>SalaryServlet</servlet-name>
+		<servlet-class>com.echarts.controller.SalaryServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>Guangdong</servlet-name>
+		<servlet-class>com.echarts.controller.ChuangZhouServlet</servlet-class>
+	</servlet>
+
+
+
+
+
+
+	<servlet-mapping>
+		<servlet-name>echarts</servlet-name>
+		<url-pattern>/servlet/age</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SchoolServlet</servlet-name>
+		<url-pattern>/servlet/school</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GenderServlet</servlet-name>
+		<url-pattern>/servlet/gender</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CityServlet</servlet-name>
+		<url-pattern>/servlet/city</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SalaryServlet</servlet-name>
+		<url-pattern>/servlet/salary</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Guangdong</servlet-name>
+		<url-pattern>/servlet/guangdong</url-pattern>
+	</servlet-mapping>
+</web-app>

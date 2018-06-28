@@ -1,0 +1,35 @@
+.uidialog{
+    background-color: #fff;
+    border: 8px solid #747474;
+    border-radius: 5px;
+    box-shadow: 0px 0px 7px 0px #c5c5c5;
+    width: 800px;
+    height: 300px;
+    position:fixed;
+    top:20%;
+    left:20%;
+}
+.uidialog-titlebar{
+    background-color: #565656;
+    /*height: 6%;*/
+    color:white;
+    padding:5px;
+    font-size:0.8em;
+}
+.uidialog-titlebar:after{
+    clear: both;
+    content: '';
+    display:block;
+}
+.uidialog-titlebar-title{
+    float: left;
+}
+.uidialog-titlebar-btncontainer{
+    float:right;
+}
+.uidialog-titlebar-btncontainer a{
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0 2px;
+}

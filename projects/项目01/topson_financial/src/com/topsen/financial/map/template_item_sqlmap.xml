@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap   PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"  "http://ibatis.apache.org/dtd/sql-map-2.dtd"> 
+<sqlMap namespace="temp_item_space">
+  <typeAlias alias="temp_item" type="com.topsen.financial.po.TemplateItem" />
+    <resultMap id="temp_item_result" class="temp_item">
+		<result property="tempItemId" column="temp_item_id" javaType="int" jdbcType="int" /> 
+		<result property="tempItemName" column="temp_item_name" javaType="java.lang.String" jdbcType="varchar" />
+		<result property="template" column="temp_id" select="temp_space.one"/>
+		<result property="funId" column="fun_id" javaType="int" jdbcType="int" /> 
+		<result property="valueType" column="valuetype" javaType="java.lang.String" jdbcType="varchar" />
+		<result property="sumValue" column="sum_value" javaType="java.lang.String" jdbcType="char" />
+		<result property="totalValue" column="total_value" javaType="java.lang.String" jdbcType="char" />
+	</resultMap>
+	<select id="all" resultMap="temp_item_result">
+	  select * from template_item order by temp_id,order_type
+	</select>
+	<select id="queryByTempId" resultMap="temp_item_result" parameterClass="int">
+	  select * from template_item where temp_id=#tempId# order by order_type
+	</select>
+	<select id="queryItemById" parameterClass="int" resultMap="temp_item_result">
+	  select * from template_item where temp_item_id=#tempItemId# order by order_type
+	</select>
+</sqlMap>

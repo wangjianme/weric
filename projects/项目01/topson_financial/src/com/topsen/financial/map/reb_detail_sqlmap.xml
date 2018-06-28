@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap   PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"  "http://ibatis.apache.org/dtd/sql-map-2.dtd"> 
+<sqlMap namespace="reb_detail_space">
+  <typeAlias alias="reb_detail" type="com.topsen.financial.po.RebursementDetail" />
+    <resultMap id="reb_detali_result" class="reb_detail">
+		<result property="detailId" column="reb_detail_id" javaType="int" jdbcType="int" /> 
+		<result property="item" column="temp_item_id" select="temp_item_space.queryItemById"/>
+		<result property="detailValue" column="detail_value" javaType="java.lang.String" jdbcType="varchar"/>
+		<result property="rebId" column="reb_id" javaType="java.lang.String" jdbcType="varchar" /> 
+		<result property="groupId" column="group_id" javaType="int" jdbcType="int" /> 
+		<result property="typeId" column="type_id" javaType="int" jdbcType="int" /> 
+		<result property="orderValue" column="order_value" javaType="int" jdbcType="int" /> 
+		<result property="flag" column="flag" javaType="java.lang.String" jdbcType="char" /> 
+		<result property="template" column="temp_id"  select="temp_space.one"/> 
+	</resultMap>
+	<insert id="insert" parameterClass="reb_detail">
+	  insert into rebursement_detail values (#detailValue#,#rebId#,#groupId#,#typeId#,#template.tempId#,#orderValue#,#item.tempItemId#,-1)
+	</insert>
+	<insert id="update" parameterClass="java.lang.String">
+	  update rebursement_detail set flag = 0 where reb_id=#rebId#
+	</insert>
+	<select id="queryByRebId" parameterClass="java.lang.String" resultMap="reb_detali_result">
+	  select r.* from rebursement_detail r,template t where r.temp_id = t.temp_id and reb_id=#rebId# order by t.order_type,group_id,order_value
+	</select>
+	<select id="distinctTempId" parameterClass="java.lang.String" resultClass="int">
+	  select distinct(temp_id) from rebursement_detail where reb_id=#rebId#
+	</select>
+	<delete id="delete" parameterClass="java.lang.String">
+	  delete from rebursement_detail where reb_id=#rebId#
+	</delete>
+</sqlMap>

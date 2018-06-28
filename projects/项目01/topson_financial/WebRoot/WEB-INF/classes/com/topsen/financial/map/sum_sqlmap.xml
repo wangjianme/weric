@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap   PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"  "http://ibatis.apache.org/dtd/sql-map-2.dtd"> 
+<sqlMap namespace="sum_space">
+	<typeAlias alias="sum" type="com.topsen.financial.po.SumRebursement" />
+	
+	<resultMap id="sum_result" class="sum">
+		<result property="id" column="id" javaType="int" jdbcType="int" /> 
+		<result property="total" column="total" javaType="float" jdbcType="float" />
+		<result property="butie" column="butie" javaType="float" jdbcType="float" />
+		<result property="zongji" column="zongji" javaType="float" jdbcType="float" />
+		<result property="rebId" column="reb_id" javaType="java.lang.String" jdbcType="varchar" />
+	</resultMap>
+	
+	<select id="one" parameterClass="java.lang.String" resultMap="sum_result" >
+	  select * from sum_rebursement where reb_id=#rebId#
+	</select>
+	<update id="update" parameterClass="sum">
+	  update sum_rebursement set total=#total#,butie=#butie#,zongji=#zongji# where reb_id=#rebId#
+	</update>
+	<insert id="insert" parameterClass="sum">
+	  insert into sum_rebursement values (#total#,#butie#,#zongji#,#rebId#)
+	</insert>
+</sqlMap>

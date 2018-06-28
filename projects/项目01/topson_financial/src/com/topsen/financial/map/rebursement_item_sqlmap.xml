@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap   PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"  "http://ibatis.apache.org/dtd/sql-map-2.dtd"> 
+<sqlMap namespace="reb_item_space">
+
+	<typeAlias alias="rebItem" type="com.topsen.financial.po.RebursementItem" />
+	
+	<resultMap id="reb_item_result" class="rebItem">
+		<result property="itemId" column="reb_item_id" javaType="int" jdbcType="int" /> 
+		<result property="rebId" column="reb_id" javaType="java.lang.String" jdbcType="varchar" />
+		<result property="beginDate" column="begin_date" javaType="java.lang.String" jdbcType="varchar" />
+		<result property="beginPlace" column="begin_place" javaType="java.lang.String" jdbcType="varchar" />
+		<result property="endDate" column="end_date" javaType="java.lang.String" jdbcType="varchar" />
+		<result property="endPlace" column="end_place" javaType="java.lang.String" jdbcType="varchar" />
+		<result property="cityTraffic" column="city_traffic" javaType="float" jdbcType="float" />
+		<result property="others" column="others" javaType="float" jdbcType="float" />
+		<result property="zsMoney" column="zs_money" javaType="float" jdbcType="float" />
+		<result property="butie" column="butie" javaType="float" jdbcType="float" />
+		<result property="total" column="total" javaType="float" jdbcType="float" />
+	    
+		
+	</resultMap>
+	<insert id="insert" parameterClass="rebItem">
+	   insert into rebursement_item values (#rebId#,#beginDate#,#beginPlace#,#endDate#,#endPlace#,#cityTraffic#,#others#,#zsMoney#,#butie#,#total#,#remark#)
+	</insert>
+	<select id="queryItemByRebId" parameterClass="java.lang.String" resultMap="reb_item_result">
+	  select * from rebursement_item where reb_id=#rebId#
+	</select>
+	<select id="one" parameterClass="int" resultMap="reb_item_result">
+	  select * from rebursement_item where reb_item_id=#itemId#
+	</select>
+	<delete id="delete"  parameterClass="java.lang.String">
+	  delete from rebursement_item where reb_id=#rebId#
+	</delete>
+</sqlMap>

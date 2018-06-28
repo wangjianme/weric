@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap   PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"  "http://ibatis.apache.org/dtd/sql-map-2.dtd"> 
+<sqlMap namespace="temp_type_space">
+  <typeAlias alias="tempType" type="com.topsen.financial.po.TemplateType" />
+    <resultMap id="temp_type_result" class="tempType">
+		<result property="typeId" column="type_id" javaType="int" jdbcType="int" /> 
+		<result property="typeName" column="temp_type_name" javaType="java.lang.String" jdbcType="varchar" />
+	</resultMap>
+	<select id="one" parameterClass="int" resultMap="temp_type_result">
+	  select * from template_type where type_id=#typeId#
+	</select>
+</sqlMap>

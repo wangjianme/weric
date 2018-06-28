@@ -1,0 +1,144 @@
+.fm{
+    width:80%;
+    margin: 40px auto;
+    padding: 20px 5px;
+    font-size: 14px;
+    color: #4f4f4f;
+    border:1px solid #A5A8B8;
+}
+.fm div{
+    margin-bottom: 7px ;
+}
+.fm label{
+    display: inline-block;
+    width:70px;
+    text-align: right;
+}
+.fm label.fixed{
+    position: absolute;
+    top:2px;
+}
+.fm input[type='text'],
+.fm input[type='password']{
+    border-radius: 2px;
+    border: 1px solid #4f4f4f;
+    font-size:1em;
+}
+.fm input[type='text']:focus,
+.fm input[type='password']:focus{
+    box-shadow: 1px 1px 10px 1px #5068df;
+}
+.fm div.relative{
+    position: relative;
+}
+div.chkdiv{
+    position: relative;
+    width:14px;
+    height:14px;
+    border: 1px solid #4f4f4f;
+    display: inline-block;
+    top: 7px;
+    margin-right:5px;
+}
+div.chkdiv span{
+    opacity: 0;
+    position: absolute;
+    top: -9px;
+    left:-5px;
+    z-index: 998;
+    font-size:1.5em;
+    font-weight: 900;
+    transform: rotate(15deg);
+}
+div.chkdiv input {
+    opacity: 0;
+    margin: -5px;
+    padding: 0;
+    position: absolute;
+    top:0px;
+    left:0px;
+    width:inherit;
+    height:inherit;
+    z-index: 999;
+}
+div.chkdiv input:checked + span{
+    opacity: 1;
+}
+/*
+*涓嬫媺鍒楄〃鏍峰紡
+*/
+.seldiv{
+    width:170px;
+    height: 20px;
+    position: relative;
+    display:inline-block;
+    margin-right:40px;
+    margin-bottom:10px;
+}
+.seldiv input{
+    width: inherit;
+    height:inherit;
+    border-radius: 3px;
+    border: 1px solid #4f4f4f;
+    outline: none;
+    padding: 0 30px 0 5px;
+}
+.seldiv span{
+    font-size: 10px;
+    transform: rotate(180deg) scale(1.2);
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    display: inline-block;
+    background-color: #ABABAB;
+    width:18px;
+    height:18px;
+    text-align: center;
+    line-height: 18px;
+    position: absolute;
+    right: -35px;
+    top:  2px;
+    color: #767676;
+}
+.seldiv input:hover, .seldiv span:hover{
+    cursor: pointer;
+}
+.seldiv ul{
+    display: none;
+    position: absolute;
+    width: 205px;
+    top:22px;
+    left:0px;
+    z-index:99;
+    margin:0px;
+    padding:0px;
+    list-style: none;
+    border:1px solid #4f4f4f;
+    color: #484848;
+}
+.seldiv ul li{
+    font-size:13px;
+    height:20px;
+    line-height: 20px;
+    border-bottom: 1px solid #4f4f4f;
+    padding: 5px;
+    background: #fff;
+}
+.seldiv ul li:hover{
+    background-color: #f6f6f6;
+}
+.seldiv ul li:last-child{
+    border-bottom: 0px;
+}
+.fm textarea{
+    position: absolute;
+    top:0px;
+    left:78px;
+    border-radius: 2px;
+    border: 1px solid #4f4f4f;
+}
+.btn{
+    border-radius: 2px;
+    border-width: 0px;
+    border-left:10px solid #4f4f4f;
+    padding: 4px 5px;
+}

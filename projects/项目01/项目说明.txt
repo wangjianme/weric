@@ -1,0 +1,8 @@
+项目名称:本项目是个人做的真实上线的项目，为公司的财务管理系统(topson_financial)
+数据库:
+    1.采用Oracle数据库 账号为txcw  密码为txcw123456
+
+项目访问的域名为:http://localhost:8080/topson_financial
+
+项目登录账号为:0166,登录密码为123456
+    

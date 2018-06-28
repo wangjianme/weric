@@ -1,0 +1,30 @@
+.div_RightMenu
+{
+    z-index:30000;
+    text-align:left;    
+    cursor: default;
+    position: absolute;
+    background-color:#FAFFF8;
+    width:160px;
+    height:auto;
+    border: 1px solid #333333;
+    display:none;
+
+    filter:progid:DXImageTransform.Microsoft.Shadow(Color=#333333,Direction=120,strength=5);    
+}
+
+.divMenuItem
+{
+    height:17px;
+    color:Black;
+    font-family:ËÎÌו;
+    vertical-align:middle;
+    font-size:10pt;
+    margin-bottom:3px;
+    cursor:hand;
+    padding-left:30px;
+    padding-top:2px;
+    
+
+    
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap   PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"  "http://ibatis.apache.org/dtd/sql-map-2.dtd"> 
+<sqlMap namespace="power_space">
+  <typeAlias alias="power" type="com.topsen.financial.po.Power" />
+  <resultMap id="power_result" class="power">
+		<result property="powerId" column="power_id" javaType="int" jdbcType="int" /> 
+		<result property="powerName" column="power_name" javaType="java.lang.String" jdbcType="varchar" />
+		<result property="powerURL" column="power_url" javaType="java.lang.String" jdbcType="varchar" />
+		<result property="powerCode" column="power_code" javaType="java.lang.String" jdbcType="varchar" />
+	</resultMap>
+
+	<select id="queryAll" resultMap="power_result">
+	  select * from financial_power order by power_code
+	</select>
+	<select id="queryByRoleId" resultMap="power_result" parameterClass="int">
+	  select p.* from financial_power p,financial_role r,power_role pr where p.power_id = pr.power_id and r.role_id=pr.role_id and r.role_id=#roleId#
+	</select>
+	<delete id="delete" parameterClass="int">
+	  delete from power_role where role_id=#roleId#
+	</delete>
+	<insert id="insert" parameterClass="java.util.HashMap">
+	  insert into power_role values (#powerId#,#roleId#)
+	</insert>
+	<select id="queryEmpPower" resultMap="power_result" parameterClass="int">
+	  select fp.* from financial_role fr,financial_power fp,power_role pr where  fp.power_id = pr.power_id and fr.role_id=pr.role_id and  fr.role_id=#role_id# order by fp.power_code
+	</select>
+	
+
+</sqlMap>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"  "http://ibatis.apache.org/dtd/sql-map-2.dtd"> 
+
+<sqlMap namespace="log_space">
+
+	<typeAlias alias="log" type="com.topsen.financial.po.OperationLog" />
+	
+	<resultMap id="log_result" class="log">
+		<result property="logId" column="log_id" javaType="int" jdbcType="int" /> 
+		<result property="logType" column="log_type" javaType="java.lang.String" jdbcType="varchar" /> 
+		<result property="tableName" column="oper_table" javaType="java.lang.String" jdbcType="varchar" /> 
+		<result property="year" column="oper_year" javaType="int" jdbcType="int" /> 
+		<result property="month" column="oper_month" javaType="int" jdbcType="int" /> 
+		<result property="day" column="oper_day" javaType="int" jdbcType="int" /> 
+		<result property="time" column="oper_time" javaType="java.lang.String" jdbcType="varchar" /> 
+		<result property="content" column="log_content" javaType="java.lang.String" jdbcType="varchar" /> 
+		<result property="logDetail" column="log_detail" javaType="java.lang.String" jdbcType="varchar" /> 
+		<result property="emp" select="emp_space.one" column="empno"/> 
+	</resultMap>
+	
+	<select id="all" resultMap="log_result" >
+	  select * from oper_log  order by oper_year,oper_month,oper_day
+	</select>
+	<select id="count" resultClass="int" >
+	  select count(*) from oper_log
+	</select>
+	<insert id="insert" parameterClass="log">
+	  insert into oper_log values (#logType#,#tableName#,#year#,#month#,#day#,#time#,#emp.empno#,#content#,#logDetail#)
+	</insert>
+</sqlMap>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap   PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"  "http://ibatis.apache.org/dtd/sql-map-2.dtd"> 
+<sqlMap namespace="message_space">
+	<typeAlias alias="message" type="com.topsen.financial.po.BackMessage" />
+	
+	<resultMap id="message_result" class="message">
+		<result property="mid" column="mid" javaType="int" jdbcType="int" /> 
+		<result property="rebId" column="reb_id" javaType="java.lang.String" jdbcType="nvarchar" />
+		<result property="message" column="message" javaType="java.lang.String" jdbcType="varchar" />
+	</resultMap>
+	
+	<select id="one" parameterClass="java.lang.String" resultMap="message_result" >
+	  select * from back_message where reb_id=#rebId#
+	</select>
+	<insert id="insert" parameterClass="message">
+	  insert into back_message values (#rebId#,#message#)
+	</insert>
+	<update id="update" parameterClass="message">
+	  update back_message set message=#message# where reb_id=#rebId#
+	</update>
+</sqlMap>

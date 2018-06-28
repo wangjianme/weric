@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap   PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"  "http://ibatis.apache.org/dtd/sql-map-2.dtd"> 
+<sqlMap namespace="role_space">
+  <typeAlias alias="role" type="com.topsen.financial.po.Role" />
+    <resultMap id="role_result" class="role">
+		<result property="roleId" column="role_id" javaType="int" jdbcType="int" /> 
+		<result property="roleName" column="role_name" javaType="java.lang.String" jdbcType="varchar" />
+	</resultMap>
+	<select id="queryUserRole" resultMap="role_result" parameterClass="java.lang.String">
+	  select fr.* from financial_role fr,EMPLOEE emp,role_emp re where fr.role_id = re.role_id and emp.EMPNO=re.empno and emp.EMPNO=#empno#
+	</select>
+	<select id="queryAll" resultMap="role_result">
+	  select * from financial_role order by role_id
+	</select>
+	<select id="count" resultClass="int">
+	  select count(*) from financial_role
+	</select>
+	<select id="one" resultMap="role_result">
+	  select * from financial_role where role_id=#roleId#
+	</select>
+	<delete id="delete" parameterClass="int">
+	   delete from financial_role where role_id=#roleId#
+	</delete>
+	<insert id="insert" parameterClass="role">
+	   insert into financial_role values(#roleName#)
+	</insert>
+	<update id="update" parameterClass="role">
+	   update financial_role set role_name=#roleName# where role_id=#roleId#
+	</update>
+</sqlMap>

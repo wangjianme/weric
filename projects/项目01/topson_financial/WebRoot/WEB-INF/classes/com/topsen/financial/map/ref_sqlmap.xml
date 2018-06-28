@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>     
+<!DOCTYPE sqlMap   PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"  "http://ibatis.apache.org/dtd/sql-map-2.dtd">   
+<sqlMap namespace="ref_space">
+	<typeAlias alias="ref" type="com.topsen.financial.po.RebursementReference" />
+	
+	<resultMap id="ref_result" class="ref">
+		<result property="id" column="id" javaType="int" jdbcType="int" /> 
+		<result property="refName" column="ref_name" javaType="java.lang.String" jdbcType="varchar" />
+		<result property="refColumnId" column="ref_column_id" javaType="int" jdbcType="int" />
+	</resultMap>    
+	
+	<select id="all"  resultMap="ref_result">
+		select * from rebursement_reference
+	</select>
+	
+</sqlMap>

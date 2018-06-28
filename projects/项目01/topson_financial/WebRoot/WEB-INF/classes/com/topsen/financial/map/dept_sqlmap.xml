@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>     
+<!DOCTYPE sqlMap   PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"  "http://ibatis.apache.org/dtd/sql-map-2.dtd">   
+
+<sqlMap namespace="dept_space">
+
+	<typeAlias alias="dept" type="com.topsen.financial.po.Deptment" />
+	
+	<resultMap id="dept_result" class="dept">
+		<result property="deptno" column="deptno" 
+				javaType="int" jdbcType="int" /> 
+		<result property="dname" column="dname"    
+				javaType="java.lang.String" jdbcType="varchar" />
+		<result property="description" column="description" 
+				javaType="java.lang.String" jdbcType="varchar" />
+		<result property="dnumber" column="dnumber" 
+				javaType="java.lang.String" jdbcType="varchar" />
+				<result property="flag" column="flag" 
+				javaType="java.lang.String" jdbcType="char" />
+	</resultMap>    
+	<select id="one" parameterClass="int" resultClass="dept">
+		select * from deptment where deptno=$deptno$ and flag=0
+	</select>
+	<select id="findAllDept" resultClass="dept" >
+		select * from deptment where flag=0 order by dnumber
+	</select>
+	<select id="countData" resultClass="int" >
+		select count(*) from deptment where flag=0
+	</select>
+	<insert id="insertDept" parameterClass="dept">
+	  insert into deptment values (#dname#,#description#,#dnumber#,0)
+	</insert>
+	<delete id="delete" parameterClass="int">
+	  delete from deptment where deptno=$deptno$
+	</delete>
+	<update id="update" parameterClass="dept">
+	  update deptment set dnumber=#dnumber#,dname=#dname#,description=#description#,flag=#flag# where deptno=#deptno#
+	</update>
+</sqlMap>

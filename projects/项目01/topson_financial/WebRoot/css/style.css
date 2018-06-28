@@ -1,0 +1,58 @@
+/* 应用样式表 */
+/* 作者：seek */
+
+/*/main/*/
+body{
+	text-align:center;
+	background: url(../images/back01.jpg) repeat-x;
+	background-color:#ededed;
+	margin:10px;
+	}
+
+form{
+	text-indent:0; 
+	word-spacing:0; 
+	margin:0
+	}
+
+input{
+	font-size:12px;
+	}
+
+td{
+	font-size:12px;;
+	font-family:宋体,arial;
+	line-height:160%;
+	color:#5c5c5c; 
+	}
+
+p {
+    text-align:justify;
+    text-justify:inter-ideograph;
+    text-indent:2em;
+    padding:0px;
+    }
+	
+/*表格背景*/
+#login_table{
+	width:358px;
+	overflow:hidden;
+	margin:0 auto;
+	}
+#login_table02{
+	width:296px;
+	overflow:hidden;
+	margin:0 auto;
+	}
+
+.back_login01{
+	background:url(../images/login_img01.gif) no-repeat; 
+	height:105px; 
+	}
+.back_login02{
+	background:url(../images/login_img02.gif) no-repeat; 
+	height:211px; 
+	}
+
+/*线*/	
+.login_input{border-bottom:1px solid #cccccc;border-left:0px;border-right:0px;border-top:0px;background:none;}

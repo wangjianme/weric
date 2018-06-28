@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE sqlMap   PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"  "http://ibatis.apache.org/dtd/sql-map-2.dtd"> 
+<sqlMap namespace="emp_space">
+
+	<typeAlias alias="emp" type="com.topsen.financial.po.Emploee" />
+	
+	<resultMap id="emp_result" class="emp">
+		<result property="empno" column="empno" javaType="java.lang.String" jdbcType="varchar2" /> 
+		<result property="ename" column="ename" javaType="java.lang.String" jdbcType="nvarchar2" />
+		<result property="password" column="password" javaType="java.lang.String" jdbcType="varchar2" />
+		<result property="dname" column="dname" javaType="java.lang.String" jdbcType="varchar2" />
+		<result property="orgName" column="orgname" javaType="java.lang.String" jdbcType="varchar2" />
+	</resultMap>
+	
+	<select id="one" parameterClass="String" resultMap="emp_result" >
+	  
+	    select emp.empno as empno,emp.ename as ename,emp.password as password,org.ORGANIZATION_FULLNAME as orgname,dept.DNAME as dname 
+		from emploee emp,JOB_DESCRIPTION orgdesc,deptment dept,ORGANIZATION org
+		where emp.JOB_DESCRIPTION_ID is not null
+		    and emp.JOB_DESCRIPTION_ID=orgdesc.JOB_DESCRIPTION_ID
+      		and dept.DEPT_ID=orgdesc.DEPT_ID
+      		and org.ORGANIZATION_ID=orgdesc.ORGANIZATION_ID
+      		and emp.empno=#empno#
+      
+	</select>
+	<select id="queryByRoleId" parameterClass="int" resultMap="emp_result" >
+	   
+	     select emp.EMPNO as empno,emp.ENAME as ename,emp.PASSWORD as password,org.ORGANIZATION_FULLNAME as orgname,dept.DNAME dname 
+		 from EMPLOEE emp,JOB_DESCRIPTION orgdesc,DEPTMENT dept,ORGANIZATION org,role_emp re,financial_role fr 
+		 where emp.JOB_DESCRIPTION_ID is not null
+		      and emp.EMPNO=re.empno
+		      and fr.role_id=re.role_id 
+			  and dept.DEPT_ID=orgdesc.DEPT_ID
+              and org.ORGANIZATION_ID=orgdesc.ORGANIZATION_ID
+		      and re.role_id=#role_id#
+			  and emp.JOB_DESCRIPTION_ID=orgdesc.JOB_DESCRIPTION_ID
+		order by dept.DNAME
+	  
+	</select>
+	<select id="queryAll" resultMap="emp_result" >
+	  
+	    select emp.EMPNO as empno,emp.ENAME as ename,emp.PASSWORD as password,org.ORGANIZATION_FULLNAME as orgname,dept.DNAME as dname 
+		from EMPLOEE emp,JOB_DESCRIPTION orgdesc,DEPTMENT dept,ORGANIZATION org
+		where emp.JOB_DESCRIPTION_ID is not null
+		    and emp.JOB_DESCRIPTION_ID=orgdesc.JOB_DESCRIPTION_ID
+      		and dept.DEPT_ID=orgdesc.DEPT_ID
+      		and org.ORGANIZATION_ID=orgdesc.ORGANIZATION_ID
+        order by org.ORGANIZATION_FULLNAME,dept.DNAME
+	  
+	</select>
+	<delete id="delete" parameterClass="int">
+	 
+	  delete from role_emp where role_id=#roleId#
+	</delete>
+	<insert id="insert" parameterClass="java.util.HashMap">
+	  
+	  insert into role_emp values (#roleId#,#empno#)
+	</insert>
+	<insert id="update" parameterClass="emp">
+		
+		update EMPLOEE set PASSWORD=#password# where EMPNO=#empno#
+	</insert>
+</sqlMap>

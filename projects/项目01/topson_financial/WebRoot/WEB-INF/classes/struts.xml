@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+  
+  <package name="sp" extends="struts-default">
+    <interceptors>
+       <interceptor name="log" class="com.topsen.financial.action.interceptoer.LogAndCheckURLInterceptor"/>
+       <interceptor-stack name="logableStack">
+         <interceptor-ref name="defaultStack"></interceptor-ref>
+         <interceptor-ref name="log"></interceptor-ref>
+       </interceptor-stack>
+    </interceptors>
+    
+    <default-interceptor-ref name="logableStack"/>
+    
+    <global-results>
+      <result name="index">/runout.jsp</result>
+      <result name="excpetion">/error.jsp</result>
+    </global-results>
+    <global-exception-mappings>
+      <exception-mapping result="excpetion" exception="java.lang.Exception"></exception-mapping>
+    </global-exception-mappings>
+    <action name="log" class="com.topsen.financial.action.LogAction">
+      <result name="next">/rzgl.jsp</result>
+    </action>
+    <action name="dept" class="com.topsen.financial.action.DeptAction">
+      <result name="go">/showOneDept.jsp</result>
+      <result name="next">/bmgl.jsp</result>
+    </action>
+    <action name="emp" class="com.topsen.financial.action.EmploeeAction">
+      <result name="next">/index.jsp</result>
+      <result name="go">/rolegroup.jsp</result>
+      <result name="upconfirm">/upconfirm.jsp</result>
+      <result name="update" type="redirectAction">role!queryAllRole</result>
+    </action>
+    <action name="role" class="com.topsen.financial.action.RoleAction">
+      <result name="next">/jsgl.jsp</result>
+      <result name="go">/showOneRole.jsp</result>
+    </action>
+    <action name="power" class="com.topsen.financial.action.PowerAction">
+      <result name="next">/jsgl_qxfp.jsp</result>
+      <result name="go" type="redirectAction">role!queryAllRole</result>
+      <result name="sucess">/main.jsp</result>
+    </action>
+    <action name="reb" class="com.topsen.financial.action.RebursementAction">
+      <result name="stepone">/application.jsp</result>
+      <result name="steptwo">/mx_add.jsp</result>
+      <result name="stepthree">/mainreb.jsp</result>
+      <result name="finish">/finish.jsp</result>
+      <result name="showMine">/showMyRebursement.jsp</result>
+      <result name="view">/viewRebursement.jsp</result>
+      <result name="showCheck">/showCheck.jsp</result>
+      <result name="showDeptCheck">/deptShowCheck.jsp</result>
+      <result name="print">/print.jsp</result>
+      <result name="message">/back.jsp</result>
+    </action>
+    <action name="code" class="com.topsen.financial.action.CodeAction">
+    </action>
+  </package>
+</struts>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap   PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"  "http://ibatis.apache.org/dtd/sql-map-2.dtd"> 
+<sqlMap namespace="temp_space">
+  <typeAlias alias="temp" type="com.topsen.financial.po.Template" />
+    <resultMap id="temp_result" class="temp">
+		<result property="tempId" column="temp_id" javaType="int" jdbcType="int" /> 
+		<result property="tempName" column="temp_name" javaType="java.lang.String" jdbcType="varchar" />
+		<result property="type" column="type_id" select="temp_type_space.one"/>
+		<result property="itemList" column="temp_id" select="temp_item_space.queryByTempId"/>
+		<result property="tempDesc" column="temp_desc" javaType="java.lang.String" jdbcType="varchar" />
+	</resultMap>
+	<select id="all" resultMap="temp_result">
+	  select * from template order by order_type
+	</select>
+	<select id="one" resultMap="temp_result" parameterClass="int">
+	  select * from template  where temp_id=#tempId# order by order_type
+	</select>
+</sqlMap>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap   PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"  "http://ibatis.apache.org/dtd/sql-map-2.dtd"> 
+<sqlMap namespace="reb_space">
+
+	<typeAlias alias="reb" type="com.topsen.financial.po.Rebursement" />
+	
+	<resultMap id="reb_result" class="reb">
+		<result property="rebId" column="reb_id" javaType="java.lang.String" jdbcType="varchar" /> 
+		<result property="rebDate" column="reb_date" javaType="java.lang.String" jdbcType="varchar" />
+		<result property="startDate" column="start_date" javaType="java.lang.String" jdbcType="varchar" />
+		<result property="backDate" column="back_date" javaType="java.lang.String" jdbcType="varchar" />
+		<result property="duty" column="duty" javaType="java.lang.String" jdbcType="varchar" />
+		<result property="emp" column="empno" select="emp_space.one" /> 
+		<result property="moneyUpper" column="money_upper" javaType="java.lang.String" jdbcType="nvarchar" />
+		<result property="moneyLower" column="money_lower" javaType="float" jdbcType="float" />
+		<result property="accordMoney" column="accord_money" javaType="float" jdbcType="float" />
+		<result property="balanceMoney" column="balance_money" javaType="float" jdbcType="float" /> 
+		<result property="dname" column="dname" javaType="java.lang.String" jdbcType="varchar" />
+		<result property="flag" column="flag" javaType="java.lang.String" jdbcType="varchar" />
+		<result property="rebNumber" column="reb_number" javaType="java.lang.String" jdbcType="varchar" />
+		<result property="orgName" column="org_name" javaType="java.lang.String" jdbcType="varchar" />
+		<result property="proNumber" column="pro_number" javaType="java.lang.String" jdbcType="varchar" />
+		<result property="rebItemList" column="reb_id" select="reb_item_space.queryItemByRebId" />
+		<result property="peopleNumber" column="people_number" javaType="int" jdbcType="int" />
+
+	</resultMap> 
+  <select id="pageByRebNumber" parameterClass="java.util.HashMap" resultMap="reb_result">
+	 select * from rebursement where empno=#empno# and flag != '5' and reb_number=#rebNumber# order by reb_id desc
+	</select>
+	<select id="countByRebNumber" parameterClass="java.util.HashMap" resultClass="int">
+	select count(*) from rebursement where empno=#empno# and flag != '5' and reb_number=#rebNumber#
+	</select>
+	<!-- 2014-05-10 按报销单编号进行模糊查询 -->
+	<select id="pageCheckByRebNumber" parameterClass="java.util.HashMap" resultMap="reb_result">
+	 <!--flag=1 or flag=4 or flag=3  flag=6 or flag=8 or flag=1 or flag=2 or flag=3 and flag != '5'-->
+	 select * from rebursement where (flag =6 or flag=8 or flag=1 or flag=2 or flag=4 or flag=3 and flag!=5)
+	    <isNotEmpty property="reb_number">
+	    and   reb_number like '%$reb_number$%' 
+	    </isNotEmpty> 
+	    <!-- 2014-5-21 -->
+	    <isNotEmpty property="dname">
+     and dname='$dname$'
+    </isNotEmpty>
+         <isNotEmpty property="empno">
+	    and empno like '%$empno$%'  
+	   </isNotEmpty> 
+        order by reb_id desc
+	</select>
+	<!-- 按员工编号进行查询 -->
+	<select id="countCheckByRebNumber" parameterClass="java.util.HashMap" resultClass="int">
+	<!-- flag=1 or flag=4 or flag=3 -->
+	select count(*) from rebursement where (flag =6 or flag=8 or flag=1 or flag=2 or flag=4 or flag=3 and flag!=5)  
+       <isNotEmpty property="reb_number">
+	    and   reb_number like '%$reb_number$%' 
+	    </isNotEmpty> 
+	    <isNotEmpty property="oname">
+    and org_name = '$oname$'
+    </isNotEmpty>
+        <isNotEmpty property="empno">
+	    and empno like '%$empno$%'  
+	   </isNotEmpty>
+	   
+	</select>
+	<select id="pageByCheck"  resultMap="reb_result">
+	 select * from rebursement where flag=1 or flag=4 or flag=3 order by reb_id desc
+	</select>
+	<select id="countByCheck" resultClass="int">
+	select count(*) from rebursement where flag =1 or flag=4 or flag=3
+	</select>
+	<select id="queryByPage" parameterClass="java.lang.String" resultMap="reb_result">
+	 select * from rebursement where empno=#empno# and flag != '5' order by reb_id desc
+	</select>
+	<!-- 改1 -->
+	<select id="queryByPageDept" parameterClass="java.util.HashMap" resultMap="reb_result">
+	<!-- flag=6 or flag=8 or flag=1 or flag=2 or flag=3 and flag != '5' -->
+     select * from rebursement where ( flag=6 or flag=8 or flag=1 or flag=2 or flag=3 and flag != '5') 
+    <isNotEmpty property="dname">
+     and dname='$dname$'
+    </isNotEmpty> 
+     <isNotEmpty property="empno">
+     and empno = '$empno$'
+    </isNotEmpty> 
+     <isNotEmpty property="oname">
+    and org_name = '$oname$'
+    </isNotEmpty> 
+     order by reb_id desc
+    </select>
+    
+    <select id="countPageDept" parameterClass="java.util.HashMap" resultClass="int">
+    <!-- flag=6 or flag=8 or flag=1 or flag=2 or flag=3 and flag != '5' -->
+    select count(*) from rebursement where ( flag=6 or flag=8 or flag=1 or flag=2 or flag=3 and flag != '5')
+    <isNotEmpty property="dname">
+    and dname='$dname$'
+    </isNotEmpty> 
+    <isNotEmpty property="oname">
+    and org_name = '$oname$'
+    </isNotEmpty>
+    <isNotEmpty property="empno">
+     and empno = '$empno$'
+    </isNotEmpty> 
+    
+    </select>
+    
+	<!--<select id="queryByPageDept" parameterClass="java.lang.String" resultMap="reb_result">
+	 select * from rebursement where (flag=6 or flag=8 or flag=1 or flag=2 or flag=3 and flag != '5') and dname=#dname#  order by reb_id desc
+	</select>
+	<select id="countPageDept" parameterClass="java.lang.String" resultClass="int">
+	select count(*) from rebursement where (flag=6 or flag=8 or flag=1 or flag=2 or flag=3 and flag != '5') and dname=#dname#
+	</select>-->
+	<select id = "queryDname" parameterClass="java.lang.String" resultClass="String">
+	select DNAME from EMPLOEE a,JOB_DESCRIPTION b,DEPTMENT c where a.JOB_DESCRIPTION_ID = b.JOB_DESCRIPTION_ID and b.DEPT_ID = c.DEPT_ID and EMPNO = #empno#
+	</select>
+	<select id = "queryOname" parameterClass="java.lang.String" resultClass="String">
+	select ORGANIZATION_FULLNAME from EMPLOEE a,JOB_DESCRIPTION b,DEPTMENT c,ORGANIZATION d where JOB_DESCRIPTION_ID = b.JOB_DESCRIPTION_ID and b.DEPT_ID = c.DEPT_ID and b.ORGANIZATION_ID = d.ORGANIZATION_ID and EMPNO = #empno# 
+	</select>
+	<!-- 改1 -->
+	<select id="count" parameterClass="java.lang.String" resultClass="int">
+	select count(*) from rebursement where empno=#empno# and flag != '5'
+	</select>
+	<select id="one" parameterClass="java.lang.String" resultMap="reb_result">
+	     select * from rebursement where reb_id=#rebId#
+	</select>
+	<insert id="insert" parameterClass="reb">
+	  insert into rebursement values (#rebId#,#rebDate#,#startDate#,#backDate#,#duty#,#emp.empno#,#moneyUpper#,#moneyLower#,#accordMoney#,#balanceMoney#,#dname#,#flag#,#rebNumber#,#orgName#,#proNumber#,#peopleNumber#,#koujian#)
+	</insert>
+	<delete id="delete" parameterClass="java.lang.String">
+	  delete from rebursement where reb_id=#rebId#
+	</delete>
+	<update id="update" parameterClass="reb">
+	  update rebursement set flag=#flag# where reb_id=#rebId#
+	</update>
+</sqlMap>
